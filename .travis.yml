@@ -1,4 +1,6 @@
 language: node_js
+node_js:
+  - "7"
 branches:
   only:
   - master
@@ -16,6 +18,6 @@ before_install:
 - git config --global user.email '0x5e@sina.cn'
 install:
 - yarn global add hexo-cli
-- yarn install
+- yarn
 script:
 - yarn run deploy  # hexo clean && hexo g -d
