@@ -20,6 +20,8 @@ categories: 技术相关
 
 很久以后才搞明白，原来这就是传说中的黑科技。。一键配网
 
+<!-- more -->
+
 ### 一键配网
 
 SmartConfig、EasyConnect、Esptouch、Airkiss……whatever, 各个厂商有自己不同的实现和名称，大致原理是差不多的

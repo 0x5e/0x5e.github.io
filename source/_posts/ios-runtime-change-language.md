@@ -16,6 +16,8 @@ categories: 技术相关
 - 仅在`DEBUG`环境生效，不能影响生产环境
 - 对`UIWebView`、`UIBarButtonItem`、`UIPasteboard`等系统组件也能够生效
 
+<!-- more -->
+
 ## 分析
 
 多语言文件会被存放在`<App Bundle Path>/<Language Id>.lproj/`下，其中`*.string`在工程中是`"key" = "value";`的文本形式，编译后实际上是二进制的plist文件，可以用`plutil -p /path/to/xxx.strings`查看。

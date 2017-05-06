@@ -11,6 +11,8 @@ categories: 技术相关
 
 还有：`-[UIApplication openURL]`已Deprecated，记得用`-[UIApplication openURL:options:completionHandler:]`代替
 
+<!-- more -->
+
 ### Sample
 
 ```objc

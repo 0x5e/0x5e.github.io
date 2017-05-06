@@ -24,6 +24,8 @@ $ codesign --force --sign 'iPhone Distribution: Hangzhou XXX Technology Co., LTD
 $ codesign --verify --verbose Example.app
 ```
 
+<!-- more -->
+
 ## 授权机制（Entitlements）
 
 Entitlements 算是一个配置列表，列出了这个应用一些基本信息（Bundle Id，Team Id, 开发/生产环境等）和申请的权限（推送，iCloud，调试等）。与 Xcode 的 Capabilities 选项卡对应。
