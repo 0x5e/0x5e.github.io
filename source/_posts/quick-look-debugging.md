@@ -15,6 +15,8 @@ macOS的Quick Look是我很喜欢的功能之一，其实Xcode调试器也有这
 
 ![](http://nshipster.s3.amazonaws.com/quicklook-color.gif)
 
+<!-- more -->
+
 ### 内置类型
 
 >

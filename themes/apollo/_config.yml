@@ -1,0 +1,22 @@
+menu:
+    Blog: /
+    Archive: /archives/
+    Weibo: http://weibo.com/u/2417868312
+    GitHub: https://github.com/0x5e
+    Rss: /atom.xml
+
+favicon: /favicon.png
+logo: /favicon.png
+
+# Comment
+# e.g disqus: seansun
+disqus:
+duoshuo:
+cloudTie:
+
+# Analytics
+# google-analytics:
+# ga:
+
+# Copyright Infomation
+startyear: 2016

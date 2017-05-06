@@ -8,6 +8,8 @@ PTP/IP (Picture Transfer Protocol over Internet Protocol)
 
 先MARK一下
 
+<!-- more -->
+
 ## URL
 
 [Picture Transfer Protocol (PTP)- imaging](http://www.imaging.org/site/IST/Standards/PTP_Standards/IST/Standards/PTP_Standards.aspx?hkey=53562f0a-d9af-44f2-aa8b-f92ab989cf64)
