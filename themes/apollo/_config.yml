@@ -1,12 +1,12 @@
 menu:
     Blog: /
     Archive: /archives/
-    Weibo: http://weibo.com/u/2417868312
     GitHub: https://github.com/0x5e
+    Link: /link.html
     Rss: /atom.xml
 
-favicon: /favicon.png
-logo: /favicon.png
+favicon: /favicon.ico
+logo: /imgs/avatar.jpg
 
 # Comment
 # e.g disqus: seansun
