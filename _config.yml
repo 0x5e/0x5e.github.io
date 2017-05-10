@@ -81,7 +81,7 @@ theme: apollo
 deploy:
 - type: git
   repo: git@github.com:0x5e/0x5e.github.io.git
-  branch: gh-pages
+  branch: master
 
 - type: git
   repo: git@git.coding.net:0x5e/0x5e.coding.me.git
