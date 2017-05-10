@@ -21,3 +21,6 @@ install:
 - yarn
 script:
 - yarn run deploy  # hexo clean && hexo g -d
+addons:
+  ssh_known_hosts:
+  - git.coding.net
