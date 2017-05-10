@@ -1,12 +1,12 @@
 ---
-title: hexo同时部署到github和coding并分流
+title: Hexo同时部署到Github和Coding并分流
 date: 2017-05-10 18:00:12
 tags: blog
 ---
 
 最近比较闲，可以整理一下博客。。
 
-做分流是因为，平时还是github用的多，不想把博客的项目单独存放在coding上，但是呢又想让国内访问快一点（是不是很矫情）。。
+做分流是因为，平时还是Github用的多，不想把博客的项目单独存放在Coding上，但是呢又想让国内访问快一点（是不是很矫情）
 
 本文主要内容有：
 
@@ -28,7 +28,7 @@ tags: blog
 | Pages类型 | Pages默认URL | 允许的部署来源 |
 | :------- | :---------- | :----------- |
 | Github 用户 Pages | `{user_name}.github.io` | `master` 分支 |
-| Github 项目 Pages | `{user_name}.github.io/{project_name}` | `master`分支、`coding-pages`分支、或`master`分支中的`/docs`目录 |
+| Github 项目 Pages | `{user_name}.github.io/{project_name}` | `master`分支、`gh-pages`分支、或`master`分支中的`/docs`目录 |
 | Coding 用户 Pages | `{user_name}.coding.me` | `master` 分支 |
 | Coding 项目 Pages | `{user_name}.coding.me/{project_name}` | `master`分支、`coding-pages`分支、或`master`分支中的`/docs`目录 |
 
@@ -127,7 +127,16 @@ addons:
 
 ## 绑定自定义域名
 
-<!-- TODO -->
+Github: 新增一条`CNAME`记录到`{user_name}.github.io`。
+Coding: 新增一条`CNAME`记录到`pages.coding.me`，然后在项目设置里添加自定义域名。
+
+### 海内外分流
+
+其实就是添加两条相同的主机记录，分别到Github和Coding，只是解析线路一条设置为海外，一条设置为国内（默认），如图：
+
+![](/imgs/hexo-github-coding-sync.png)
+
+就这样。。
 
 ## 参考资料
 
