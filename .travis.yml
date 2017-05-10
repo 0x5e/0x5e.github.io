@@ -21,4 +21,5 @@ script:
 - yarn run deploy  # hexo clean && hexo g -d
 addons:
   ssh_known_hosts:
+  - github.com
   - git.coding.net
