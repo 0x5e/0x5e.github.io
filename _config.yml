@@ -85,7 +85,7 @@ deploy:
 
 - type: git
   repo: git@git.coding.net:0x5e/0x5e.coding.me.git
-  branch: coding-pages
+  branch: master
 
 # title, chinese available
 links_title: 友情链接
