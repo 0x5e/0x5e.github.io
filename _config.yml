@@ -79,10 +79,13 @@ theme: apollo
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: 
-    github: git@github.com:0x5e/0x5e.github.io.git, gh-pages
-    coding: git@git.coding.net:0x5e/0x5e.coding.me.git, coding-pages
+- type: git
+  repo: git@github.com:0x5e/0x5e.github.io.git
+  branch: gh-pages
+
+- type: git
+  repo: git@git.coding.net:0x5e/0x5e.coding.me.git
+  branch: coding-pages
 
 # title, chinese available
 links_title: 友情链接
