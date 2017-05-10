@@ -82,18 +82,19 @@ deploy:
 - type: git
   repo: git@github.com:0x5e/0x5e.github.io.git
   branch: master
+
 - type: git
   repo: git@git.coding.net:0x5e/0x5e.coding.me.git
   branch: master
 
-# # title, chinese available
-# links_title: 友情链接
-# # links
-# links:
-#   桃园小七: http://taoyuanxiaoqi.com/
-#   七章: http://www.chenshixin.com/
-#   flyingcys: http://blog.csdn.net/flyingcys/
-#   reality0ne: https://reality0ne.com/
-#   面条: http://www.xxhjkl.me/
+# title, chinese available
+links_title: 友情链接
+# links
+links:
+  桃园小七: http://taoyuanxiaoqi.com/
+  七章: http://www.chenshixin.com/
+  flyingcys: http://blog.csdn.net/flyingcys/
+  reality0ne: https://reality0ne.com/
+  面条: http://www.xxhjkl.me/
 
 
