@@ -78,6 +78,44 @@ List By Module：
 - Themes
 - Plugins
 
+## Choices
+
+- markdown render
+	- webpack loader
+		- http://webpack.github.io/docs/using-loaders.html
+		- https://github.com/peerigon/markdown-loader
+	- vue component
+		- https://github.com/miaolz123/vue-markdown
+
+- vue-router mode
+	- hash (markdown anchor not support)
+	- history (backend required)
+
+- vue-router rule
+	- path `./posts/{name}`
+	- query `./posts?name={name}`
+
+## to learn
+
+- webpack usage
+- advantage & disadvantage of spa
+- seo
+- rss feed
+- ssr
+
 ## Todos
+ 
+- ~~.md encoding problem~~ `charset=utf-8;`
+- img links in .md
+- anchor in .md
+- first load progres animation
+- separate to cli, theme && site project
+- plugin load
+	- http://kyfxbl.iteye.com/blog/2237538
+	- http://nodeonly.com/2015/07/07/npm-postinstall/
+	- http://www.ieclipse.cn/en/2016/07/18/Web/Hexo-dev-plugin/
+- i18n
+- document
+- test
 
 many many many todo...
