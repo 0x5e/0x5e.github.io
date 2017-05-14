@@ -11,7 +11,7 @@ And because he is very very salty, he decide to write article in English(Chingli
 One day, he is wondering, why not use vue.js to build a blog system?
 Although there are lots of wheels implenenting the blog system, he still want to write one by himself. Why? Because very salty, of course.
 
-**！！Not finished yet, temp save！！**
+__**Not finished yet **__
 
 <!-- more -->
 
@@ -33,15 +33,15 @@ https://hexo.io
 
 ### Vue blog
 
+Here are some vue blog systems above 100 stars. Mostly needs backend.
+
 https://github.com/jcc/blog
 
 https://github.com/Vuedo/vuedo
 
-https://github.com/viko16/vue-ghpages-blog
+https://github.com/viko16/vue-ghpages-blog *backend-free*
 
 https://github.com/elva2596/vueBlog
-
-https://github.com/x-pengg/VueBlog
 
 https://github.com/lincenying/mmf-blog-vue2
 
@@ -49,10 +49,35 @@ https://github.com/BUPT-HJM/vue-blog
 
 https://github.com/jiangjiu/vue-leancloud-blog
 
-https://github.com/myst729/Vuelog
+https://github.com/myst729/Vuelog *backend-free*
+
+### Modules
+
+List By Module：
+
+- Render
+	- Markdown
+		- Front Matter
+		- Style
+	- AsciiDoc maybe
+- Generate
+	- Home Page
+	- Archives
+	- Tags
+	- RSS Feed
+- Config
+	- Site info
+	- Route rules
+	- Date/Time format
+	- i18n
+	- Pagination
+	- Others
+- Deploy
+	- Git
+	- Others
+- Themes
+- Plugins
 
 ## Todos
 
-- seo
-- rss feed
-- ssr
+many many many todo...
