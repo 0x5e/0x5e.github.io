@@ -98,6 +98,7 @@ List By Module：
 ## to learn
 
 - webpack usage
+- hexo plugin mechanism
 - advantage & disadvantage of spa
 - seo
 - rss feed
@@ -110,7 +111,7 @@ List By Module：
 - anchor in .md
 - first load progres animation
 - separate to cli, theme && site project
-- plugin load
+- plugin implementation mechanism
 	- http://kyfxbl.iteye.com/blog/2237538
 	- http://nodeonly.com/2015/07/07/npm-postinstall/
 	- http://www.ieclipse.cn/en/2016/07/18/Web/Hexo-dev-plugin/
