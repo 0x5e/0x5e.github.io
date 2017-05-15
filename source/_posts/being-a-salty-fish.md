@@ -1,7 +1,7 @@
 ---
 title: Being a salty fish
 date: 2017-05-11 00:54:00
-tags: vue.js
+tags: vue
 categories: 技术相关
 ---
 
@@ -82,6 +82,7 @@ List By Module：
 
 - markdown render
 	- webpack loader
+		- https://webpack.github.io/docs/list-of-loaders.html
 		- http://webpack.github.io/docs/using-loaders.html
 		- https://github.com/peerigon/markdown-loader
 		- https://github.com/QingWei-Li/vue-markdown-loader
