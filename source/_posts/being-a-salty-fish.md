@@ -84,6 +84,7 @@ List By Module：
 	- webpack loader
 		- http://webpack.github.io/docs/using-loaders.html
 		- https://github.com/peerigon/markdown-loader
+		- https://github.com/QingWei-Li/vue-markdown-loader
 	- vue component
 		- https://github.com/miaolz123/vue-markdown
 
