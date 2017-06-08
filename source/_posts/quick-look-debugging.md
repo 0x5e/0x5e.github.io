@@ -5,7 +5,7 @@ tags: iOS
 categories: 技术相关
 ---
 
-![](imgs/zhenjing.jpg)
+![](zhenjing.jpg)
 
 这么多年才发现这个功能。。感觉一大把时光被浪费了- -ll
 

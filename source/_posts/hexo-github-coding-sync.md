@@ -134,7 +134,7 @@ Coding: 新增一条`CNAME`记录到`pages.coding.me`，然后在项目设置里
 
 其实就是添加两条相同的主机记录，分别到Github和Coding，只是解析线路一条设置为海外，一条设置为国内（默认），如图：
 
-![](/imgs/hexo-github-coding-sync.png)
+![](dns-resolve.png)
 
 就这样。。
 

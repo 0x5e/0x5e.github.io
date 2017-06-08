@@ -39,7 +39,7 @@ SmartConfig、EasyConnect、Esptouch、Airkiss……whatever, 各个厂商有自
 
 时序图：
 
-![](/imgs/smartconfig.svg)
+![](smartconfig.svg)
 
 ### AP配网
 
@@ -53,14 +53,14 @@ AP配网操作起来复杂的多，对用户很不友好，一般作为备选方
 
 时序图：
 
-![](/imgs/apconfig.svg)
+![](apconfig.svg)
 
 
 ## Mesh组网方案
 
 Wifi Mesh网络的配网也可以使用SmartConfig。最终每个设备都运行在sta+ap模式，类似路由器中继/桥接的感觉。多个设备都配置上路由器之后，他们会互相进行协商，只留一个设备作为根节点连接到路由器，另外的设备作为子节点，形成一个树状图的结构。根节点会对数据包进行转发。BLE也可以用于Mesh组网。
 
-![](/imgs/mesh.jpg)
+![](mesh.jpg)
 
 这样的网络拓扑结构适合覆盖大面积的开放区域，因为二级三级节点不用直连路由器。同时网络流量可以做负载均衡等等，不会给根节点带来太大压力。传输功率、功耗、信号干扰方面也会有提升。
 

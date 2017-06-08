@@ -11,11 +11,9 @@ And because he is very very salty, he decide to write article in English(Chingli
 One day, he is wondering, why not use vue.js to build a blog system?
 Although there are lots of wheels implenenting the blog system, he still want to write one by himself. Why? Because very salty, of course.
 
-__**Not finished yet **__
-
 <!-- more -->
 
-![](/imgs/alcohol-salty-fish.png)
+![](alcohol-salty-fish.png)
 
 ## Analyze
 
