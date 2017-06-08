@@ -61,6 +61,7 @@ img = cv2.GaussianBlur(img,(3,3),0)
 # img = cv2.equalizeHist(img)
 
 # Laplace图像增强
+# kernel = numpy.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
 kernel = numpy.ones((3,3),numpy.float32)/9
 img = cv2.filter2D(img, -1, kernel)
 
