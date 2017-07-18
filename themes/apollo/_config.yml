@@ -10,13 +10,13 @@ logo: /imgs/avatar.jpg
 
 # Comment
 # e.g disqus: seansun
-disqus:
+disqus: '0x5e'
 duoshuo:
 cloudTie:
 
 # Analytics
 # google-analytics:
-# ga:
+ga: UA-102733496-1
 
 # Copyright Infomation
 startyear: 2016
