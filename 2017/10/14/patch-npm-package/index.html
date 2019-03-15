@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 给 npm package 打补丁 · 0x5e的博客</title><meta name="description" content="给 npm package 打补丁 - 0x5e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.0x5e.cn/atom.xml" title="0x5e的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/imgs/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/0x5e" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINK</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">给 npm package 打补丁</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><p><del>用英文写了好久，实在是写不下去全删了，太蹩脚了哈哈哈哈</del></p>
+<p>大家都知道 React Native 更新频率很快，这么久了也没有出稳定版，经常会有一些API的变动导致三方库不兼容新版本，这都是很常见的。比如0.47去除了Android的<code>createJSModules</code>方法，相对应的所有的三方库都得把这方法前面的<code>@Override</code>给去掉，不然就会编译失败了。</p>
+<a id="more"></a>
+<p>一般也就这么几个选项：</p>
+<ol>
+<li><p>提issue，等开发者更新代码</p>
+<p> 如果碰上年久失修的三方库，无人维护怎么办呢，等更新要等到猴年马月，或者压根就再也不更新了。</p>
+</li>
+<li><p>fork项目，改一行，提交PR</p>
+<p> 为了一行<code>@Override</code>，有点杀鸡用牛刀，项目依赖要先改成自己fork的项目，然后过n个礼拜，等开发者合并代码、提交npm之后，再把依赖改回来。还得把这事儿一直记着，没准就忘了呢。</p>
+</li>
+<li><p>直接改<code>npm_modules</code>目录下的代码</p>
+<p> 这就更不靠谱了，一般都是在<code>.gitignore</code>里面忽略掉的，多人合作怎么办，几个月之后忘记了这事儿跑不起来了又怎么办，很麻烦。</p>
+</li>
+<li><p>不升级</p>
+<p> 没准新版本解决了我的一个bug，我非升不可呢，多矛盾哈。</p>
+</li>
+</ol>
+<p>那怎么办呢？</p>
+<p>下面有请本次嘉宾 patch-package 出场 ：）</p>
+<h1 id="使用-patch-package"><a href="#使用-patch-package" class="headerlink" title="使用 patch-package"></a>使用 patch-package</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>yarn add --dev patch-package</code> （不用说了）</p>
+<p>然后在<code>package.json</code>加入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;prepare&quot;: &quot;patch-package&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样<code>patch-package</code>就会在每次npm库新增、升级、删除等操作之后，自动加上你打的补丁。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li>在<code>node_modules</code>目录下，对你想打补丁的三方库进行修改，比如将<code>node_modules/react-native-xxx/android/src/main/path/to/xxxPackage.java</code>中的<code>createJSModules</code>方法的<code>@Override</code>前缀删除。</li>
+<li>运行<code>yarn patch-package react-native-xxx</code>，补丁会保存在<code>patches/react-native-xxx+a.b.c.patch</code>，每次<code>yarn install/add/remove/...</code>等操作后，<code>patch-package</code>会自动为你打上补丁，直到某一天<code>react-native-xxx</code>升级以后，补丁冲突了（很大可能就是fix了），那么它的使命也就完成了</li>
+</ol>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>适合一些比较小的地方的修改，改个一两行之类的，碰上react-native不想merge的分支，可能用这个不太合适。。说不定更新没几个版本就冲突了，那还是老老实实fork吧。。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://github.com/facebook/react-native/pull/12807" target="_blank" rel="noopener">[Android] Add file input to WebView</a><br><a href="https://github.com/facebook/react-native/pull/6478" target="_blank" rel="noopener">[Android] Add onShouldStartLoadWithRequest callback to WebView</a><br><a href="https://facebook.github.io/react-native/releases/next/docs/custom-webview-android.html" target="_blank" rel="noopener">Custom WebView</a><br><a href="https://github.com/ds300/patch-package/issues/15" target="_blank" rel="noopener">ds300/pack-package#15</a><br><a href="http://blog.novanet.no/easier-react-native-upgrade-with-patch-package/" target="_blank" rel="noopener">Easier React Native upgrade with patch-package</a><br><a href="https://facebook.github.io/react-native/docs/android-building-from-source.html" target="_blank" rel="noopener">Building React Native from source</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/02/03/spa-optimize/" class="prev">PREV</a><a href="/2017/07/17/macos-dlna-cast/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = '0x5e';
+var disqus_identifier = '2017/10/14/patch-npm-package/';
+var disqus_title = '给 npm package 打补丁';
+var disqus_url = 'https://blog.0x5e.cn/2017/10/14/patch-npm-package/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//0x5e.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2019 <a href="https://blog.0x5e.cn">0x5e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p><p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-102733496-1",'auto');ga('send','pageview');</script></body></html>

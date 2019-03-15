@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 一次停车场蓝牙开闸系统的破解尝试(未完待续) · 0x5e的博客</title><meta name="description" content="一次停车场蓝牙开闸系统的破解尝试(未完待续) - 0x5e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.0x5e.cn/atom.xml" title="0x5e的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/imgs/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/0x5e" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINK</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">一次停车场蓝牙开闸系统的破解尝试(未完待续)</h1><div class="post-info">Apr 30, 2016</div><div class="post-content"><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>为了相应G20的号召，2016年初开始，每天都有尽职的警察蜀黍贴罚单，路边违停成本大幅上升…只能每天停在地下车库了😔。</p>
+<p>收费的小哥看我天天来停，推荐我用”行呗App”，可以用蓝牙开闸，支付宝付钱(真不是广告)。看着挺神奇的，就很想把它的蓝牙开闸原理搞明白。</p>
+<h2 id="经过"><a href="#经过" class="headerlink" title="经过"></a>经过</h2><h3 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h3><p>多次折腾以后发现iOS一个抓包神器:<code>Replica</code>，是<code>Surge</code>作者开发的网络调试工具，超赞☺️</p>
+<p>用法和Surge差不多，打开以后日志里会记录Http请求的所有信息和内容(与Surge相比，多了请求和返回的数据内容)</p>
+<a id="more"></a>
+<p>发现若干条相关信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//获取入口钥匙</span><br><span class="line">http://chargerest.park1.cn/BackgroundApp/parkingEntrance/getEntranceKey.do</span><br><span class="line"></span><br><span class="line">//Request Body:</span><br><span class="line">&#123;&quot;carParkId&quot;: 123456,&quot;userPhoneId&quot;: &quot;appUser1234567890&quot;&#125;</span><br><span class="line"></span><br><span class="line">//Response Body</span><br><span class="line">&#123;&quot;orderType&quot;:1,&quot;errorcode&quot;:0,&quot;errorMessage&quot;:&quot;&quot;,&quot;systemTime&quot;:&quot;2016-04-28 10:20:15 4&quot;,&quot;keyData&quot;:&quot;7t7p8jaZ31XK+ijUrzRvTeSomXDzRAqlhaCa5xwoxQ=&quot;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//获取出口钥匙</span><br><span class="line">http://chargerest.park1.cn/BackgroundApp/parkingExport/getExportKey.do</span><br><span class="line"></span><br><span class="line">//Request Body:</span><br><span class="line">&#123;&quot;carParkId&quot;: 123456,&quot;userPhoneId&quot;: &quot;appUser1234567890&quot;&#125;</span><br><span class="line"></span><br><span class="line">//Response Body</span><br><span class="line">&#123;&quot;errorcode&quot;:0,&quot;errorMessage&quot;:&quot;出场临停用户发放KEY成功&quot;,&quot;systemTime&quot;:&quot;2016-04-28 18:20:15 4&quot;,&quot;keyData&quot;:&quot;AqlhXDzRoxQaCa5xwXK+ijUrzRvTeSo7t7p8jaZ31m=&quot;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//还有两条入口和出口开启成功的请求,应该是和计费相关的</span><br><span class="line">http://chargerest.park1.cn/BackgroundApp/parkingExport/exportOpenSuccess.do</span><br></pre></td></tr></table></figure>
+<p><code>keyData</code>应该就是蓝牙开闸的钥匙了。</p>
+<h3 id="反编译"><a href="#反编译" class="headerlink" title="反编译"></a>反编译</h3><p><code>keyData</code>肯定是加密过的，不然也太容易了吧..(恩..想想也是)</p>
+<p>再换位思考一下，既然都加密了，那<code>systemTime</code>肯定也会用到的..不然传给我做啥= =ll</p>
+<p>这里用到了<code>jadx-gui</code>进行安卓版本的反编译，勾上<code>Tools-&gt;Deobfuscation</code>可以起到一定程度的反混淆</p>
+<p>用<code>getExportKey</code>，<code>keyData</code>，<code>systemTime</code>，<code>userPhoneId</code>，<code>Bluetooth</code>等关键字做了大量的搜索与整理,理清了大致开闸流程如下:</p>
+<ol>
+<li>进入停车场之前，app里点击开闸按钮，手机会搜索附近的蓝牙设备与广播，并获取广播内容(蓝牙4.0收发数据是可以不用与设备配对的)，解析出停车场名称，闸门名称，停车场id，闸门id，随后在手机上显示各个闸门的名称，供用户选择。这个过程不需要联网。</li>
+<li>选定闸门后，会进行网络请求获取<code>keyData</code>，然后进行各种解密和移位操作。总结了一下，入参为<code>keyData</code>，<code>systemTime</code>，<code>userPhoneNo</code>(与<code>userPhoneId</code>对应,登录时获取)，闸门id(入口为0,出口为非0)，当前时间(年月日)，返回结果是一个byte数组。</li>
+<li>将byte数组发送给闸门后，闸门开启，同时手机调用计费接口开始计费。</li>
+<li>出场前缴费，后面流程和入场类似。</li>
+</ol>
+<h3 id="猜想"><a href="#猜想" class="headerlink" title="猜想"></a>猜想</h3><p>首先开闸应该是通过手机蓝牙发送数据，而不是通过网络请求。因为有些停车场也是有蓝牙开闸的，用的是一个带有纽扣电池的蓝牙小圆片。并且手机在开闸成功后调用了<code>xxxOpenSuccess.do</code>接口。</p>
+<p>我猜测停车场和行呗都有计费系统，并且两个系统是相互独立的。(不然不需要手机调用开始计费的接口)</p>
+<p>猜测后台流程如下:</p>
+<ol>
+<li>闸门获取到手机发出的key，然后分别去停车场后台与行呗后台查询，是否放行。</li>
+<li>放行后，行呗后台会计时，停车场后台可能也会计时。</li>
+<li>出场前缴费。</li>
+<li>出场时闸门取到key，从任意一个后台查到已缴费，即可放行。</li>
+</ol>
+<h2 id="结果-待验证"><a href="#结果-待验证" class="headerlink" title="结果(待验证)"></a>结果(待验证)</h2><p>因为计费仍然是通过手机调用接口，如果把该请求拦截了，在出场之前才发送，那么会造成行呗后台计费时间不准确，可以达到近乎免费的效果😳。</p>
+<p>五一回来后去试一下..真可以的话…嘻嘻..我什么也不知道☺️</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
+<li>将各个停车场和行呗的计费系统合并(难度有点大)</li>
+<li>用手机网络请求开闸，然后行呗后台再调用接口让停车场开闸(链路太长，稳定性会有问题，需要改造)</li>
+<li>改为使用图像识别的开闸系统(这个…)</li>
+<li>加大app的安全性(好像没什么效果)</li>
+</ul>
+<hr>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><p>2016/05/06:</p>
+<p>几天测试下来,只需要在用app正常入场以后,再伪造出场记录(获取出场key,再调用停止计费接口,直接调用第二个接口会失败),然后在出场之前伪造入场记录,即可免费停车..</p>
+<p>调用了一下找车位接口,发现杭州支持行呗蓝牙开闸的停车场还蛮多的,大大小小竟然有100多个🙄🙄🙄</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2016/07/09/fake-icloud/" class="prev">PREV</a><a href="/2016/04/16/ios-fastlane-build/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = '0x5e';
+var disqus_identifier = '2016/04/30/xingbei-crack/';
+var disqus_title = '一次停车场蓝牙开闸系统的破解尝试(未完待续)';
+var disqus_url = 'https://blog.0x5e.cn/2016/04/30/xingbei-crack/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//0x5e.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2019 <a href="https://blog.0x5e.cn">0x5e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p><p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-102733496-1",'auto');ga('send','pageview');</script></body></html>

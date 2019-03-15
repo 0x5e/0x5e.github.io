@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 一年一度的2016总结 · 0x5e的博客</title><meta name="description" content="一年一度的2016总结 - 0x5e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.0x5e.cn/atom.xml" title="0x5e的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/imgs/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/0x5e" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINK</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">一年一度的2016总结</h1><div class="post-info">Jan 2, 2017</div><div class="post-content"><p>讲到总结，我总是会回想起小学的时候，周一国旗下讲话，值周班同学的惯用开头：</p>
+<blockquote>
+<p>同学们，老师们，大家好<br>时光飞逝，岁月如梭<br>时间过得真快，一眨眼，愉快的一周又过去了……<br>在上一周里……<br>在新的一周里……</p>
+</blockquote>
+<p>（我的作文水平也就仅限于此了。。）</p>
+<p>记得有一次期终考前，看到老师从内网ftp下载了考卷到教室的电脑里修改，于是偷偷背下了ip地址，心里一阵窃喜。。。放学之后飞奔回家，发现其实并不能打开╮(╯▽╰)╭</p>
+<p>恩。。一眨眼，身边做老师的同学们已经在给学生出题了。。</p>
+<a id="more"></a>
+<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><p>今年的主要工作方向是物联网，从中学习并巩固了许多之前没接触过的知识，成长了许多。</p>
+<h3 id="WiFi模块配网"><a href="#WiFi模块配网" class="headerlink" title="WiFi模块配网"></a>WiFi模块配网</h3><p>涉及手机、wifi模块、路由器、服务器四端的交互，让一个wifi模块从离线模式-&gt;连接路由器-&gt;连接服务端-&gt;接收app指令下发，感觉是很有趣的一件事儿，也是一个出了问题很难复现原因的事儿。</p>
+<h3 id="SDK-amp-文档"><a href="#SDK-amp-文档" class="headerlink" title="SDK &amp; 文档"></a>SDK &amp; 文档</h3><p>向客户输出SDK的过程中，碰到过各种问题。</p>
+<ul>
+<li>稳定性。后期加上了单元测试，检查并修复了一些bug。</li>
+<li>开发者没有按照我们期望的用法来调用，产生一些藏得很深的问题。需要对不合法参数做边界处理。比如初始化device对象的时候，如果入参devId有误，就直接返回nil。</li>
+<li>避免三方库的引用冲突。比如AFNetworking有2.x和3.x版本不兼容，应该避免使用。如果开发者现有的app用了AF3.0，然后接入我们的SDK（依赖AF2.0），那就很尴尬了。</li>
+<li>要易于集成。手工集成步骤多容易出错，后期改为Cocoapods集成。</li>
+<li>简单易懂。我们的客户大部分是中小型企业，开发能力有限，需要提供完善的文档解释各种概念，提供每个功能的使用方法，代码示例。</li>
+<li>方便调用。能不需要传入的参数，尽量不让开发者传入。不然增加理解成本。</li>
+<li>兼容性。sdk升级后要尽可能兼容旧版本的调用方法，一些函数、属性名称也不要经常变动。否则开发者一升级版本就会找我们提问题，我们就得提供大半天的技术支持😔。</li>
+</ul>
+<h3 id="自动构建-amp-公版打包"><a href="#自动构建-amp-公版打包" class="headerlink" title="自动构建 &amp; 公版打包"></a>自动构建 &amp; 公版打包</h3><p>身在一个为客户提供“一天快速实现智能化”的公司里，自动构建也是很应景的对吧:-)</p>
+<p>面对几十上百家的客户、两周一个版本的快速迭代，手工打包提测、每个客户的app都手工替换图标、名称，然后打包，这样就不太cool了，每天都是重复劳动不说，人力也完全不够的。。。于是乎我们把应用图标、启动图、应用名称、签名证书、各种入口的开关、常用的一些文案的修改，抽象到了一份配置文件中，交给后台管理，让产品同学自行上传素材、打包，解放开发同学的劳动力。虽然bug还是挺多，未来一定会逐步完善的。</p>
+<h3 id="RN面板"><a href="#RN面板" class="headerlink" title="RN面板"></a>RN面板</h3><p>React Native今年很火，很幸运有机会能接触并运用到实际项目中。稍稍的学会了一些JS语法，RN基础控件的使用，flex布局等，动画和redux有待学习。</p>
+<h2 id="业余时间"><a href="#业余时间" class="headerlink" title="业余时间"></a>业余时间</h2><h3 id="iOS重签名"><a href="#iOS重签名" class="headerlink" title="iOS重签名"></a>iOS重签名</h3><p>iOS编译和代码签名都被限制在macOS上完成，这样就很难和云服务建立起一些关联。。尝试过几个相关项目，isign、darling、vagrant，第一个无法通过macOS签名程序的验证（但据说可以安装），第二个缺少几个关键的系统库移植，第三个太臃肿了有种杀鸡用牛刀的感觉，不太想用。。未来如果有一天可以在linux上重签名甚至编译iOS应用的话，不知道会变成什么样子╮(╯▽╰)╭</p>
+<h3 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h3><p>iPhone越狱后可以逆向别人家的app，再加上OC是门动态语言，用反编译工具基本可以看到绝大部分逻辑并且可读性很高（只要没有用swift或者c/c++的话）。成功的分析出了贪吃蛇大战的接口签名算法，并尝试刷分上了总榜第一名（第二天醒来已经进了黑名单。。）</p>
+<h3 id="一些小脚本"><a href="#一些小脚本" class="headerlink" title="一些小脚本"></a>一些小脚本</h3><p>微信查看被删的好友</p>
+<p>优酷会员宽带提速</p>
+<p>停车场蓝牙开闸app-任意手机号注册、免费停车</p>
+<p>iCloud钓鱼网站假数据填充器</p>
+<p>airtake照片批量导出</p>
+<p>iOS编译、重签名工具</p>
+<p>（感叹一下python的三方库真的好多，大大的提升了效率，各种轮子都有现成的了^_^）</p>
+<h2 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h2><p>关于生活，印象比较深的两件事：</p>
+<ul>
+<li><p>桐乡的慢生活。在表姐和表姐夫的新家待了一下午，发现两人能共同拥有一个小家庭是多么幸福的事儿。阳台种着花花草草、各色各样的多肉植物，客厅放着慵懒的小曲儿，续上一小杯茶🍵，坐在有种咖啡店风格的房子里，听他们讲述每种茶的区别，手磨咖啡、吉他、旅游和其它。</p>
+</li>
+<li><p>久石让视听音乐会。以我的语文水平好像无法表达。。（卧槽，好听，好厉害好厉害😂）有机会的话每年都要去听😊</p>
+</li>
+</ul>
+<p>经常做的几件事：</p>
+<ul>
+<li><p>再行路吃夜宵。几个人合伙要把一只浙大烟酒僧给灌醉这是每次的必备项目，乐此不彼。变着各种法子把烟酒僧留下、敬酒，再给醉醺醺的送回家。恩趁结婚之前多过过这样的娱乐项目☺️，以后等大家都结婚了机会就少了。</p>
+</li>
+<li><p>陪syt同学逛吃。有幸品尝了这么多好吃又好看的食物，如果没有女朋友我肯定是不会来也不会知道这些地方的^_^</p>
+</li>
+</ul>
+<p>有待改善的几件事：</p>
+<ul>
+<li><p>脱发。挺明显的，每次洗完澡都能在下水道口看到满满的头发，两三次就可以把口子整个盖住😔。在听完理发师的建议（推销）后决定对这件事要重视起来，还是有挽回的机会的😂</p>
+</li>
+<li><p>身体虚。今年发生了三次因头痛而呕吐的情况，前两次并不知道原因以为可能是吃坏了或是中暑，第三次总结下来可能还是主要是头痛而引起的。主要发生在饭后，血液都跑去肚子里消化了，然后这时候出门容易让头忽冷忽热的，再然后就会觉得眼睛有点花看不清字，再然后眼睛很胀感觉眼压很高，再然后恶心想吐好难受🙄。年前已经去做了检查拍了片，年后去取报告再复查一下希望能把这个问题解决。。</p>
+</li>
+<li><p>不爱动。当然工作比较忙是个主要原因（主要借口）。不想去健身房可以考虑在家里多锻炼。。要像萧岚同学学习。可以先做些低强度的运动，希望。。能够。。坚持下来吧= =</p>
+</li>
+<li><p>做菜。丈母娘说了，结婚之前两个人都必须要会x道菜的。和爸妈住在一起没什么机会（借口）和动力学烧菜，有机会还是要尝试一下的。</p>
+</li>
+<li><p>牙疼。找个时间把智齿拔了😌</p>
+</li>
+</ul>
+<h2 id="旅行"><a href="#旅行" class="headerlink" title="旅行"></a>旅行</h2><p>厦门again（16.02.02）：<br>排队吃了很好吃的烧人肉（烧肉人），和大学室友吃了海鲜自助餐，好赞，又逛了一遍厦门大学，去了植物园、沙滩🏖，住了厦门最高的酒店。并表示以后有能力的话每个旅游过的城市的最高处都想去一下/住一下（台北、高雄、厦门、湖州✅）</p>
+<p>济州岛（16.04.02）：<br>度蜜月的好地方，可惜去的时候天气一般。有几条路的行道树是樱花🌸，开的好漂亮。真的是女生购物的好地方，免税店里人满为患，打开wifi列表可以翻十几页都找不到自己的随身wifi，并且就算找到了也连不上🙄。门口停了七八辆旅行社大巴，人多的有点害怕。。酒店服务很周到，服务员姐姐打扮的好精致好漂亮，满满的韩剧女主的感觉。去了好多博物馆：泰迪熊博物馆，HelloKitty博物馆，x博物馆。山君不离、森林🌲小火车、城山⛰日出峰……很小清新</p>
+<p>16.06.10 &amp; 16.10.15 湖州back：<br>抽空回了两次湖州，回味一下以前在学校里约会、逛操场、垃圾街吃小吃、挤公交、逛街的感觉^_^很遗憾的是，傻子生煎搬走了，柠檬奶也没以前好喝了。。。</p>
+<p>16.07.02 千岛湖公司活动：<br>涂鸦两周年，爬山、吃瓜🍉、千岛湖鱼头🐟，晚上庆功宴</p>
+<p>16.07.23 富阳永安山滑翔：<br>体验了一把飞的感觉，在山顶上和教练背着滑翔伞往前冲，然后人就离地了飞起来了+_+，看着下面的田和小房子有种在坐飞机的感觉，大约5分钟后着陆，爽<del>~</del>~好想再来一次（如果不是那么贵的话）<br>ps:永安山的面包车司机一点不比秋名山的差</p>
+<p>16.12.25 临安湍口温泉：<br>度假村还不错，入住一整天泡温泉不限次数，晚上9点去的时候人不多，每个池子泡了一遍然后醉醺醺的回去睡觉~<br>这里中餐馆的厨师还不错，恩，杭州西湖牛肉羹真的很好吃哈哈哈（被一旁的杭州人嫌弃了一脸）</p>
+<h2 id="计划"><a href="#计划" class="headerlink" title="计划"></a>计划</h2><p>在2017年计划做的事情：</p>
+<ul>
+<li>做好时间管理。不管在工作还是生活上，事情比较多的时候我总是会手忙脚乱，分不清优先级顺序，往往是看了哪个顺眼就先做哪个，或者哪个简单先做哪个，这样不太可取。“进程切换非常昂贵，避免多任务，保持单进程。”</li>
+<li>多运动。先定他个小目标比如。。。~！@#￥%……&amp;*</li>
+<li>北海道、西安、成都、日本韩国游轮，有时间再挑几个去去😂</li>
+<li>把存了两年的小小金库拿出来，找点稳妥的项目投资一下。。</li>
+<li>希望能保持一月一更的节奏，对学到的知识进行梳理、总结</li>
+</ul>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>好了一篇耗时大半天的流水账式的年终总结又完成了，感谢各位观众朋友的收看，明年今天我们再会~</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/01/11/nslog-unicode/" class="prev">PREV</a><a href="/2016/09/25/ios-codesign-things/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = '0x5e';
+var disqus_identifier = '2017/01/02/2016-summary/';
+var disqus_title = '一年一度的2016总结';
+var disqus_url = 'https://blog.0x5e.cn/2017/01/02/2016-summary/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//0x5e.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2019 <a href="https://blog.0x5e.cn">0x5e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p><p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-102733496-1",'auto');ga('send','pageview');</script></body></html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> iOS运行时更改App语言 · 0x5e的博客</title><meta name="description" content="iOS运行时更改App语言 - 0x5e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.0x5e.cn/atom.xml" title="0x5e的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/imgs/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/0x5e" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINK</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">iOS运行时更改App语言</h1><div class="post-info">Jan 22, 2017</div><div class="post-content"><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>主要是方便研发与测试同学的使用，便于验证App在不同语言下的显示效果，希望能够在现有工程不改变大量代码的情况下，尽量满足下面的需求</p>
+<ul>
+<li>不重启App</li>
+<li>不改变调用方式（仍然用<code>NSLocalizedString</code>）</li>
+<li>可设置默认语言</li>
+<li>缺失语言提醒/警告</li>
+<li>仅在<code>DEBUG</code>环境生效，不能影响生产环境</li>
+<li>对<code>UIWebView</code>、<code>UIBarButtonItem</code>、<code>UIPasteboard</code>等系统组件也能够生效</li>
+</ul>
+<a id="more"></a>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>多语言文件会被存放在<code>&lt;App Bundle Path&gt;/&lt;Language Id&gt;.lproj/</code>下，其中<code>*.string</code>在工程中是<code>&quot;key&quot; = &quot;value&quot;;</code>的文本形式，编译后实际上是二进制的plist文件，可以用<code>plutil -p /path/to/xxx.strings</code>查看。</p>
+<p>关于语言和地区ID：<br><a href="https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html" target="_blank" rel="noopener">Language and Locale IDs - Apple Developer</a></p>
+<p>项目里用到webview的地方很多，访问不同的页面时也需要支持<code>Accept-Language</code>的切换。</p>
+<p>虽然是个蛮小的需求，但是网上找的些方法暂时还满足不了（也有可能我搜索姿势不太对）</p>
+<h3 id="现有方案"><a href="#现有方案" class="headerlink" title="现有方案"></a>现有方案</h3><h4 id="1、更改-NSUserDefaults中AppleLanguages字段的值"><a href="#1、更改-NSUserDefaults中AppleLanguages字段的值" class="headerlink" title="1、更改 NSUserDefaults中AppleLanguages字段的值"></a>1、更改 <code>NSUserDefaults</code>中<code>AppleLanguages</code>字段的值</h4><p>这是比较被推荐的办法，缺点是重启应用后才生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@&quot;en&quot;, nil] forKey:@&quot;AppleLanguages&quot;];</span><br><span class="line">[[NSUserDefaults standardUserDefaults] synchronize];</span><br></pre></td></tr></table></figure>
+<h4 id="2、替换NSLocalizedString宏"><a href="#2、替换NSLocalizedString宏" class="headerlink" title="2、替换NSLocalizedString宏"></a>2、替换<code>NSLocalizedString</code>宏</h4><p>首先实现一个运行时获取多语言文案的方法，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@implementation NSBundle (RunTimeLanguage)</span><br><span class="line"></span><br><span class="line">+ (NSString *)runTimeLocalizedStringForKey:(NSString *)key &#123;</span><br><span class="line">	// TODO</span><br><span class="line">	NSString *languageId = @&quot;en&quot;;</span><br><span class="line">	</span><br><span class="line">	NSString *path = [[NSBundle mainBundle] pathForResource: languageId ofType:@&quot;lproj&quot;];</span><br><span class="line">    NSBundle *languageBundle = [NSBundle bundleWithPath:path];</span><br><span class="line">    return [languageBundle localizedStringForKey:key value:key table:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>然后在<code>PrefixHeader.pch</code>中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#undef NSLocalizedString</span><br><span class="line">#define NSLocalizedString(key, comment) [NSBundle runTimeLocalizedStringForKey:key]</span><br></pre></td></tr></table></figure>
+<p>缺点是需要在预编译头文件里添加内容，感觉不太优雅。还有这样对webview不生效。</p>
+<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><p>方法一使用的是系统的选取多语言方法，不重启应用切换语言的功能看似无法支持。<br>方法二的实现会导致webview等系统组件仍然使用了系统语言。</p>
+<p>感觉两个方法有点冲突- -ll</p>
+<p>争取在假期里完成这个三方库</p>
+<p>（有人说todo就是再也不do，希望不是这个样子😊）</p>
+<p>不管怎样，去年的指标在年前算是补上了：）@桃小七</p>
+<hr>
+<h3 id="Update-2017-1-24"><a href="#Update-2017-1-24" class="headerlink" title="Update 2017/1/24"></a>Update 2017/1/24</h3><p>将方案一和方案二做了个合并，仿照<code>设置 &gt; 通用 &gt; 语言与地区 &gt; iPhone 语言</code>做了一个高仿的<code>GSLanguagePickerController</code>。</p>
+<p><a href="https://github.com/0x5e/GSLanguagePickerController" target="_blank" rel="noopener">0x5e/GSLanguagePickerController</a></p>
+<ol>
+<li>修改语言，保存至<code>NSUserDefaults</code>，重启后全局生效</li>
+<li>替换<code>-[NSBundle localizedStringForKey:value:table:]</code>方法，在重启应用前尽可能的支持多语言</li>
+</ol>
+<p>不是很完美，然而有总比没有好。。</p>
+<p>现在可以达到的效果是：</p>
+<table>
+<thead>
+<tr>
+<th>一个普通标题</th>
+<th style="text-align:center">立刻生效</th>
+<th style="text-align:center">重启应用后生效</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NSLocalizedString</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>UIBarButtonItem</td>
+<td style="text-align:center">√(*)</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>UIWebView</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+</tbody>
+</table>
+<p>其中<code>UIBarButtonItem</code>等系统控件的多语言资源是从<code>UIKit.frameworks</code>里获取的，而<code>UIKit.frameworks/*.lproj</code>命名规则比较旧，有多种格式，会导致部分语言无法立刻生效。</p>
+<ol>
+<li><p><code>[English Name].lproj</code></p>
+<p> Examples: <code>English.lproj</code>, <code>French.lproj</code>, <code>German.lproj</code>, <code>Spanish.lproj</code></p>
+</li>
+<li><p><code>[Language Id]_[Region Id].lproj</code></p>
+<p> Examples: <code>zh_CN.lproj</code>, <code>zh_HK.lproj</code>, <code>zh_TW.lproj</code>, <code>en_GB.lproj</code></p>
+</li>
+<li><p><code>[Language Id]-[Script Id].lproj</code></p>
+<p> Examples: <code>zh-Hans.lproj</code>, <code>zh-Hant.lproj</code>, <code>es-ES.lproj</code></p>
+</li>
+</ol>
+<p>前两种是已被弃用的规则，但是<code>UIKit.frameworks</code>、<code>InternationalSettings.bundle</code>等多处仍然存在，第三种是新规则，好像是iOS 9开始的。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/03/04/ios-10-jump-to-system-setting/" class="prev">PREV</a><a href="/2017/01/11/nslog-unicode/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = '0x5e';
+var disqus_identifier = '2017/01/22/ios-runtime-change-language/';
+var disqus_title = 'iOS运行时更改App语言';
+var disqus_url = 'https://blog.0x5e.cn/2017/01/22/ios-runtime-change-language/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//0x5e.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2019 <a href="https://blog.0x5e.cn">0x5e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p><p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-102733496-1",'auto');ga('send','pageview');</script></body></html>

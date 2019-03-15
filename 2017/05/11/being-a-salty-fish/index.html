@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Being a salty fish · 0x5e的博客</title><meta name="description" content="Being a salty fish - 0x5e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.0x5e.cn/atom.xml" title="0x5e的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/imgs/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/0x5e" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINK</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Being a salty fish</h1><div class="post-info">May 11, 2017</div><div class="post-content"><p>A salty fish is now studying vue.js, so he wanna do sth to practice.<br>And because he is very very salty, he decide to write article in English(Chinglish).</p>
+<p>One day, he is wondering, why not use vue.js to build a blog system?<br>Although there are lots of wheels implenenting the blog system, he still want to write one by himself. Why? Because very salty, of course.</p>
+<a id="more"></a>
+<p><img src="alcohol-salty-fish.png" alt></p>
+<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h2><p>Make an analyze first. Which feature should be kept and which feature I’d like to modify, a fully comparison between each blog systems is required.</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p><a href="https://hexo.io" target="_blank" rel="noopener">https://hexo.io</a></p>
+<ul>
+<li>backend-free</li>
+<li>markdown writing</li>
+<li>plugin</li>
+<li>theme</li>
+<li>i18n</li>
+</ul>
+<h3 id="Vue-blog"><a href="#Vue-blog" class="headerlink" title="Vue blog"></a>Vue blog</h3><p>Here are some vue blog systems above 100 stars. Mostly needs backend.</p>
+<p><a href="https://github.com/jcc/blog" target="_blank" rel="noopener">https://github.com/jcc/blog</a></p>
+<p><a href="https://github.com/Vuedo/vuedo" target="_blank" rel="noopener">https://github.com/Vuedo/vuedo</a></p>
+<p><a href="https://github.com/viko16/vue-ghpages-blog" target="_blank" rel="noopener">https://github.com/viko16/vue-ghpages-blog</a> <em>backend-free</em></p>
+<p><a href="https://github.com/elva2596/vueBlog" target="_blank" rel="noopener">https://github.com/elva2596/vueBlog</a></p>
+<p><a href="https://github.com/lincenying/mmf-blog-vue2" target="_blank" rel="noopener">https://github.com/lincenying/mmf-blog-vue2</a></p>
+<p><a href="https://github.com/BUPT-HJM/vue-blog" target="_blank" rel="noopener">https://github.com/BUPT-HJM/vue-blog</a></p>
+<p><a href="https://github.com/jiangjiu/vue-leancloud-blog" target="_blank" rel="noopener">https://github.com/jiangjiu/vue-leancloud-blog</a></p>
+<p><a href="https://github.com/myst729/Vuelog" target="_blank" rel="noopener">https://github.com/myst729/Vuelog</a> <em>backend-free</em></p>
+<h3 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h3><p>List By Module：</p>
+<ul>
+<li>Render<ul>
+<li>Markdown<ul>
+<li>Front Matter</li>
+<li>Style</li>
+</ul>
+</li>
+<li>AsciiDoc maybe</li>
+</ul>
+</li>
+<li>Generate<ul>
+<li>Home Page</li>
+<li>Archives</li>
+<li>Tags</li>
+<li>RSS Feed</li>
+</ul>
+</li>
+<li>Config<ul>
+<li>Site info</li>
+<li>Route rules</li>
+<li>Date/Time format</li>
+<li>i18n</li>
+<li>Pagination</li>
+<li>Others</li>
+</ul>
+</li>
+<li>Deploy<ul>
+<li>Git</li>
+<li>Others</li>
+</ul>
+</li>
+<li>Themes</li>
+<li>Plugins</li>
+</ul>
+<h2 id="Choices"><a href="#Choices" class="headerlink" title="Choices"></a>Choices</h2><ul>
+<li><p>markdown render</p>
+<ul>
+<li>webpack loader<ul>
+<li><a href="https://webpack.github.io/docs/list-of-loaders.html" target="_blank" rel="noopener">https://webpack.github.io/docs/list-of-loaders.html</a></li>
+<li><a href="http://webpack.github.io/docs/using-loaders.html" target="_blank" rel="noopener">http://webpack.github.io/docs/using-loaders.html</a></li>
+<li><a href="https://github.com/peerigon/markdown-loader" target="_blank" rel="noopener">https://github.com/peerigon/markdown-loader</a></li>
+<li><a href="https://github.com/QingWei-Li/vue-markdown-loader" target="_blank" rel="noopener">https://github.com/QingWei-Li/vue-markdown-loader</a></li>
+</ul>
+</li>
+<li>vue component<ul>
+<li><a href="https://github.com/miaolz123/vue-markdown" target="_blank" rel="noopener">https://github.com/miaolz123/vue-markdown</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>vue-router mode</p>
+<ul>
+<li>hash (markdown anchor not support)</li>
+<li>history (backend required)</li>
+</ul>
+</li>
+<li><p>vue-router rule</p>
+<ul>
+<li>path <code>./posts/{name}</code></li>
+<li>query <code>./posts?name={name}</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="to-learn"><a href="#to-learn" class="headerlink" title="to learn"></a>to learn</h2><ul>
+<li>webpack usage</li>
+<li>hexo plugin mechanism</li>
+<li>advantage &amp; disadvantage of spa</li>
+<li>seo</li>
+<li>rss feed</li>
+<li>ssr</li>
+</ul>
+<h2 id="Todos"><a href="#Todos" class="headerlink" title="Todos"></a>Todos</h2><ul>
+<li><del>.md encoding problem</del> <code>charset=utf-8;</code></li>
+<li>img links in .md</li>
+<li>anchor in .md</li>
+<li>first load progres animation</li>
+<li>separate to cli, theme &amp;&amp; site project</li>
+<li>plugin implementation mechanism<ul>
+<li><a href="http://kyfxbl.iteye.com/blog/2237538" target="_blank" rel="noopener">http://kyfxbl.iteye.com/blog/2237538</a></li>
+<li><a href="http://nodeonly.com/2015/07/07/npm-postinstall/" target="_blank" rel="noopener">http://nodeonly.com/2015/07/07/npm-postinstall/</a></li>
+<li><a href="http://www.ieclipse.cn/en/2016/07/18/Web/Hexo-dev-plugin/" target="_blank" rel="noopener">http://www.ieclipse.cn/en/2016/07/18/Web/Hexo-dev-plugin/</a></li>
+</ul>
+</li>
+<li>i18n</li>
+<li>document</li>
+<li>test</li>
+</ul>
+<p>many many many todo…</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/05/15/webpack-loader-process-markdown-files/" class="prev">PREV</a><a href="/2017/05/10/hexo-github-coding-sync/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = '0x5e';
+var disqus_identifier = '2017/05/11/being-a-salty-fish/';
+var disqus_title = 'Being a salty fish';
+var disqus_url = 'https://blog.0x5e.cn/2017/05/11/being-a-salty-fish/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//0x5e.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2019 <a href="https://blog.0x5e.cn">0x5e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p><p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-102733496-1",'auto');ga('send','pageview');</script></body></html>

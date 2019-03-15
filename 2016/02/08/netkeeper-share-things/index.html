@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 关于校园网宽带共享那些事 · 0x5e的博客</title><meta name="description" content="关于校园网宽带共享那些事 - 0x5e"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.0x5e.cn/atom.xml" title="0x5e的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/imgs/avatar.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/0x5e" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/links/" target="_self" class="nav-list-link">LINK</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">关于校园网宽带共享那些事</h1><div class="post-info">Feb 8, 2016</div><div class="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&emsp;&emsp;大家上网主要是通过PPPoE拨号的方式，在家里一般可以使用路由器让多个设备同时上网，然而在学校里却总是会遇到各种各样的麻烦。<br>&emsp;&emsp;学校里很有可能同寝室的同学会共用一个宽带账号，运营商为了利益最大化，当然是希望账号卖的越多越好，就好像很久以前家里装两个固话要交双份的钱那样（听说的）。于是会对多设备账号共享做出各种限制措施。</p>
+<a id="more"></a>
+<h1 id="PPPoE-共享限制"><a href="#PPPoE-共享限制" class="headerlink" title="PPPoE 共享限制"></a>PPPoE 共享限制</h1><p>不同地区情况不同，下面是我见过的一些限制措施：</p>
+<h2 id="必须使用运营商提供的拨号客户端才能上网"><a href="#必须使用运营商提供的拨号客户端才能上网" class="headerlink" title="必须使用运营商提供的拨号客户端才能上网"></a>必须使用运营商提供的拨号客户端才能上网</h2><ol>
+<li>客户端会将宽带账号转换为真实可用的格式进行拨号，从而限制路由器的使用。</li>
+<li>客户端在运行的时候会限制<code>猎豹免费Wifi</code>，<code>WiFi共享精灵</code>等软件的使用，阻止笔记本发射WiFi热点共享网络。</li>
+<li>真实宽带账号会动态改变（用时间戳做的随机数种子），并且同一个账号只能使用一次，拨号成功即作废，就算通过工具获取到了，也是失效了的账号。</li>
+<li>真实宽带账号包含<code>\r</code>，<code>\n</code>，<code>^</code>等特殊符号，就算通过工具获取到了，也有可能无法手工保存至路由器。</li>
+</ol>
+<h2 id="拨号客户端的自我保护"><a href="#拨号客户端的自我保护" class="headerlink" title="拨号客户端的自我保护"></a>拨号客户端的自我保护</h2><ol>
+<li>自动更新，强制升级，安装驱动，从底层进行限制，等等（还会放各种广告，而且又慢又卡占好多内存，真的很恶心。。）</li>
+<li>客户端在拨号成功后会定期向服务端发送心跳信息，如果关闭客户端，服务端一段时间内收不到心跳信息，就会把你踢下线。</li>
+<li>心跳可能包含各种校验信息，会发送本地的IP地址，MAC地址，宽带账号，和上一次发送心跳后，服务端返回的key。服务端会对这些信息进行校验。</li>
+</ol>
+<h2 id="服务端的限制措施"><a href="#服务端的限制措施" class="headerlink" title="服务端的限制措施"></a>服务端的限制措施</h2><ol>
+<li>客户端心跳检测，并对心跳包内容校验，不发心跳或者心跳包有误就踢下线。</li>
+<li>宽带密码每隔n小时就更换一次，需要通过办理宽带时绑定的那个手机发送短信获取密码。</li>
+<li>在PPPoE拨号之前还要进行内网认证（不太熟悉）。</li>
+<li>检测多设备的使用（例如<a href="http://baike.baidu.com/view/414667.htm" target="_blank" rel="noopener">网络尖兵</a>），我所在的地方没有这个限制，不太了解。</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
+<li>学校派人检查寝室是否有路由器（我同学藏鞋盒里了。。。）</li>
+<li>根据《XXX》条例，和公安局相关文件规定，不得共享宽带（法律还规定不能限制宽带共享呢，呵呵。。。“我用一度电你管我用几个灯泡”）</li>
+</ol>
+<h1 id="可能会遇到的问题"><a href="#可能会遇到的问题" class="headerlink" title="可能会遇到的问题"></a>可能会遇到的问题</h1><ol>
+<li>用户名加密算法，闪讯可以找到开源的库，每个地区key不同需要自己想办法找。心跳算法，自己想办法。。其实我想说的是一旦算法升级了，在逆向出来之前，日子会很难过。。</li>
+<li>不是所有路由器都支持特殊符号的，如何区分也是个难题，TPLink系列，新老路由器的操作系统不同的，旧的用的是VxWorks，支持换行符，新的是Linux系统，不支持。这两个外观一致，管理界面长得也挺像，只是硬件版本号的区别。OpenWrt的话就写个拨号插件就好。</li>
+</ol>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><ol>
+<li>集体维权（也挺难的）</li>
+<li>用别人写的第三方拨号器（有的免费，有的收费，有的部分功能收费，有的可以捐赠）</li>
+<li>逆向出用户名加密算法，自己写一套程序用于路由器拨号或是调用系统API进行拨号，需要有一定的逆向和编程能力。</li>
+<li>在局域网自建一个PPPoE服务器，拨号后将宽带用户名密码转发至路由器进行真正的拨号，PPPoE服务器起到中转的作用。这样无论用户名加密算法和心跳算法是什么，都没有关系，通通转发即可。类似中间人攻击的一种方法。</li>
+</ol>
+<p>&emsp;&emsp;关于第四种方案，很久之前在恩山上看到过（<a href="http://www.openwrt.org.cn/bbs/forum.php？mod=viewthread&amp;tid=9030" target="_blank" rel="noopener">使用Openwrt登录闪讯-闪讯验证模块部分</a>），作者没仔细讲原理，当时也不太明白，现在想想这种方案也是挺好的，稍作修改就可以轻松应对用户名加密算法和心跳算法的改变。<br>&emsp;&emsp;之前用MFC+WinPcap实现了PPPoE-Server的登录流程，可以获取到账号密码，登录后的流程没有实现，需要修改路由表屏蔽PPPoE连接，走原来的局域网的流量，有些蛋疼，以后有空再换个实现方式看看。。。可以用虚拟机建个服务器试试，自己实现PPPoE协议栈太麻烦了，性能估计也挺差的。</p>
+<h1 id="为什么要写这个"><a href="#为什么要写这个" class="headerlink" title="为什么要写这个"></a>为什么要写这个</h1><p>&emsp;&emsp;其实更多的是对我自己的一个总结。我们学校用的是闪讯，大一的时候用的是论坛里学长们提供的破解方案，那时候还没有心跳，只要能卸载掉闪讯的驱动，就可以用笔记本WiFi热点进行共享了。另一个方案是Hook拨号函数，把宽带账号密码发送至路由器。<br>&emsp;&emsp;后来会写程序了，学会了自己写第三方拨号器，实现了用户名加密和心跳的算法，也在用户体验上下了好多功夫，尽可能的让小白用户会用，傻瓜化自动化。伴随着个人能力的提升，也有一小部分的成就感在里面。<br>&emsp;&emsp;再后来也当过所谓的奸商，在某宝卖自己写的拨号器，提供了Win和Android版本，然后轻易的被别人破解了。。。看着别人一个月能卖几百件，接近上万RMB，我的内心是崩溃的。。。<br>&emsp;&emsp;一直以来我是把拨号器当做项目认真对待的，舍弃了很多游戏的时间进行尝试和开发，无数个早已熄灯的夜晚，仍然在那里不停的尝试。开淘宝店那会儿，也做过客服，耐心回答买家的问题，提供使用教程和指导，以及一系列的售后服务，真的很努力了。。。</p>
+<p>当然拨号器是个较为稀缺的资源，作者们应该也都想过这些问题:</p>
+<ol>
+<li>要不要收费？对于学生来说，这可能将会是一笔不菲的收入，这也会很考验销售能力，推广能力，以及产品的用户体验。如果收费的话肯定要不断的进行维护，对用户负责的。但是天天教小白用户设置路由器也是很厌烦的事。。。</li>
+<li>要不要免费？小规模共享的话，限量的意义在哪里呢，不限量的话，大规模使用导致运营商更新加密算法怎么办呢，谁也无法保证新的算法一定能够被逆向出来。</li>
+<li>要不要开源？开源了别人拿去卖怎么办，GPL协议在国内可没什么卵用。</li>
+</ol>
+<p>&emsp;&emsp;总之，各有各的选择吧，现在让我再选择一次的话，如果我能给出比较完美的解决方案四，我会考虑开源的。</p>
+<p><em>— 谨以此文纪念那些和闪讯斗智斗勇的大学时光</em></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2016/02/08/new-year-new-weather/" class="prev">PREV</a><a href="/2016/02/01/2015-summary/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = '0x5e';
+var disqus_identifier = '2016/02/08/netkeeper-share-things/';
+var disqus_title = '关于校园网宽带共享那些事';
+var disqus_url = 'https://blog.0x5e.cn/2016/02/08/netkeeper-share-things/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//0x5e.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2019 <a href="https://blog.0x5e.cn">0x5e</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p><p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-102733496-1",'auto');ga('send','pageview');</script></body></html>
